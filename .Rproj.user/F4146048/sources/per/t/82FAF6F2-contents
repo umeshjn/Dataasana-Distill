@@ -1,9 +1,0 @@
----
-title: "About me"
-description: |
-  Data Science Engineer who loves story telling and believes that Data Science can make this world a better place in many ways. Using technology to make the lives of the people better is what I love about Data Science and Analytics.
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
