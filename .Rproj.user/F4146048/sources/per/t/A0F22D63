@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1589081163306.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1363895906",
+    "id" : "A0F22D63",
+    "lastKnownWriteTime" : 1589224824,
+    "last_content_update" : 1589224824706,
+    "path" : "C:/UmeshJN/Personal/Website/2020/Distill/Distill/_posts/2020-05-09-the-sharpe-ratio/the-sharpe-ratio.Rmd",
+    "project_path" : "_posts/2020-05-09-the-sharpe-ratio/the-sharpe-ratio.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "10,0",
+        "last_setup_crc32" : "",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

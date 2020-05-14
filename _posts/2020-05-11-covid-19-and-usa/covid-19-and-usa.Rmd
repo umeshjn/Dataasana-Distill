@@ -1,0 +1,196 @@
+---
+title: "Covid-19 and the USA"
+description: |
+  Covid-19 the virus which originated in China and spread across the world. The health crisis leading to economic crisis. Killing the most vulnerable population and impacting the lives of millions. 
+author:
+  - name: Umesh Narayanappa
+    url: https://www.dataasana.com/
+date: 05-14-2020
+output: distill::distill_article:
+  toc: true
+    toc_depth: 2
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE)
+
+library(highcharter)
+library(tidyverse)
+library(readxl)
+library(viridis)
+library(janitor)
+library(plotly)
+
+countries <- read_csv("https://raw.githubusercontent.com/datasets/covid-19/master/data/countries-aggregated.csv")
+
+confirmed <- read_csv("https://raw.githubusercontent.com/datasets/covid-19/master/data/us_confirmed.csv")
+
+deaths <- read_csv("https://raw.githubusercontent.com/datasets/covid-19/master/data/us_deaths.csv")
+
+```
+
+
+
+### Beginning of the pandemic
+
+
+Covid-19 emerged in China in December 2019 and slowly started spreading across China. Outside world had little idea about what was happening in China for obvious reasons but still world should have take a note of it and be cautious of what was coming. 
+
+As of Jan 22nd 2020 there were 6 countries having Covid-19 cases confirmed. 
+
+```{r}
+
+country <- countries %>%
+  filter(Date == min(Date)) %>%
+  mutate(Country = if_else(Country == "US", "United States of America", Country))
+
+colors <- c("#34495E", "#1E56C1","#E5C826")
+
+hcmap("custom/world-highres",
+      data = country,
+      value = 'Confirmed',
+      joinBy = c("name", "Country")) %>%
+  hc_colorAxis(dataClassColor="category", 
+     dataClasses = list(list(from=0, to=0, color="#34495E", name="Zero Cases"),
+                        list(from=1, to=1, color="#1E56C1", name="One Case"),
+                        list(from=2, to=2, color="#020660", name="Two Cases"),
+                        list(from=3, to=1000, color="#E5C826", name="More than 2 Cases")))
+
+```
+
+
+### USA has more than one third of the confirmed Covid-19 cases today.
+
+With 1 case on Jan 22nd 2020, USA has around 1.5 million cases today. New York and New Jersey have more than half a million confirmed cases. Following the steps  taken by the countries which were initially successful in containing the spread should have been the step to stop the spread this virus. Country wide shutdown, proper testing and qurantining the confirmed cases should have been followed not that these would have stopped the spread to 0 but this is the only option the world had.
+
+```{r}
+
+
+confirmed %>%
+  clean_names() %>%
+  filter(date == max(date)) %>%
+  group_by(province_state) %>%
+  summarise(Total = sum(case)) -> confirms
+  
+hcmap("countries/us/us-all",
+      data = confirms,
+      value = 'Total',
+      joinBy = c("name", "province_state"),
+      dataLabels = list(enabled = TRUE, format = '{point.name}')) %>%
+  hc_colorAxis(dataClassColor="category", 
+     dataClasses = list(list(from=0, to=5000, color="#34495E", name="Less than 5000 Cases"),
+                        list(from=5001, to=10000, color="#1E56C1", name="5001 to 10000 Case"),
+                        list(from=10001, to=50000, color="#020660", name="10001 to 50000 Cases"),
+                        list(from=50001, to=1000000, color="#E5C826", name="More than 50000 Cases")))
+
+```
+
+
+### More than 80000 killed by Covid-19 in USA
+
+There are very few countries in the world which dont sleep till they revenge if someone kills their citizens. USA is one of those countries. They put their entire military might whenever needed to make sure that.There are thousands killed by the enemy today and very less is done to do anything to stop it or kill it. 
+
+- 19 times in last couple of months there have been more than 2000 people killed daily.
+- 40 times in last couple of months there have been more than 1000 people killed daily.
+
+
+
+```{r}
+
+
+deaths %>%
+  clean_names() %>%
+  filter(date == max(date)) %>%
+  group_by(province_state) %>%
+  summarise(Total = sum(case)) -> dead
+  
+hcmap("countries/us/us-all",
+      data = dead,
+      value = 'Total',
+      joinBy = c("name", "province_state"),
+      dataLabels = list(enabled = TRUE, format = '{point.name}')) %>%
+  hc_colorAxis(dataClassColor="category", 
+     dataClasses = list(list(from=0, to=500, color="#34495E", name="Less than 500 Deaths"),
+                        list(from=501, to=1000, color="#1E56C1", name="5001 to 1000 Deaths"),
+                        list(from=1001, to=5000, color="#020660", name="1001 to 5000 Deaths"),
+                        list(from=5001, to=100000, color="#E5C826", name="More than 5000 Deaths")))
+
+```
+
+
+Have we become so immune to all these kills just because we dont care or we dont know how to deal with the enemy. 
+
+
+### Covid-19 has hit the most vulnerable very badly
+
+
+1 in every 3 killed in USA by Covid-19 is either the worker or inmate of the nursing homes in USA. These senior citizens who were already suffering due to aging and poor health are very badly hit by the deadly virus. 
+
+```{r}
+countries %>%
+            filter(Date == max(Date)) %>% 
+            filter(Country == 'US') %>%
+            mutate('Active' = Confirmed - Recovered - Deaths) %>%
+            gather(key = "Type", value = "Total", 4:6) %>%
+            plot_ly(labels = ~Type, 
+                    values = ~Total, 
+                    textinfo='label+percent',
+                    marker = list(colors = colors,
+                                  line = list(color = '#FFFFFF', width = 1))) %>% 
+            add_pie(hole = 0.5) %>%
+            layout(showlegend = F,
+                   xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                   yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE)) 
+
+```
+
+
+Other vulnerable community which is badly hit is the poor communities. These people who cannot afford social distancing inside their houses and who cannot stay inside the house for months without salary are so badly hit because they have to keep fighting the virus and also earn the bread to make the living. These people who are mostly in "essential" jobs are so badly and brutally hit.
+
+
+### USA was hit with 9/11 kind of attack 19 days in last couple of months
+
+USA has been so badly hit with this virus that it is really surprising how it all happened in a country which has the most costliest heatlhcare system. We should have been more well prepared to handle this well and take the right steps at the right time.
+
+
+```{r}
+
+data <- countries %>%
+        filter(Country == 'US') %>%
+        mutate(DailyPositives = Confirmed - lag(Confirmed),
+               DailyDeaths = Deaths - lag(Deaths),
+               DailyRecovered = Recovered - lag(Recovered)) %>%
+        gather(key = "Type", value = "Total", 6:8) %>%
+        select('Date', 'Type', 'Total') %>%
+        drop_na() %>%
+        filter(Total >= 0)
+
+hchart(data, 
+       "line",
+       hcaes(x=Date, y = Total, group = Type),
+             color = c("#1E56C1", "#E5C826", "#34495E")) %>%
+       hc_title(text = "Daily Numbers")  %>%
+       hc_legend(layout = "horizontal", align = "right",
+                      verticalAlign = "top")
+
+```
+
+This has not just killed the people but also made large population of the country jobless. Never ever seen such a huge rise in unemployment.
+
+
+
+### This was a global pandemic and not local. We have failed as a global community
+
+If there was a time in the history of humans to come together as a whole world and face single biggest enemy it was Covid-19. We have failed as a global community to face this enemy and that has resulted in the deaths of so many fellow citizens of the world. Every single leader responsible for making this global effort has failed us and failed us all badly.
+
+- We should have formed a Global team of medical experts
+- Each country should have had team of medical experts team working on this challenge.
+- There should have been real time data sharing between these experts of all the countries.
+- Learn what is working and what is not in other countries.
+- Try to give science and common sense more priorty
+
+Non of these is happening even today after we have so many killed and there is no such plan or leadership on global level.  
+

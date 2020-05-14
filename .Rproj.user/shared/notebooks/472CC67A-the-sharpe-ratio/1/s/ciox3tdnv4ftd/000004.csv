@@ -1,0 +1,23 @@
+"0","hchart(apple, ""line"", hcaes(as.Date(Date), Close))
+"
+"2","`parse_quosure()` is deprecated as of rlang 0.2.0.
+Please use `parse_quo()` instead.
+[90mThis warning is displayed once per session.[39m"
+"2","`as_data_frame()` is deprecated as of tibble 2.0.0.
+Please use `as_tibble()` instead.
+The signature and semantics have changed, see `?as_tibble`.
+[90mThis warning is displayed once every 8 hours.[39m
+[90mCall `lifecycle::last_warnings()` to see where this warning was generated.[39m"
+"1",""
+"1",""
+"1","|=================================================================|100% ~0 s remaining"
+"1",""
+"1"," "
+"1",""
+"1"," "
+"1",""
+"1"," "
+"1",""
+"1"," "
+"1",""
+"1"," "
