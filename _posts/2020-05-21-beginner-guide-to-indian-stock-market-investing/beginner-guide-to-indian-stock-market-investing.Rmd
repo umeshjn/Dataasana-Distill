@@ -1,0 +1,236 @@
+---
+title: "Beginner Guide to Indian Stock Market Investing"
+description: |
+  Stock Market is the only way for growing ones wealth for vast majority of the people. Majority of them fail to use this wonderful investing option.
+author:
+  - name: Umesh Narayanappa
+    url: https://www.dataasana.com/
+date: 05-21-2020
+output: distill::distill_article
+editor_options: 
+  chunk_output_type: console
+---
+
+Vast majority of the investments in the Indian stock market is owned by foreign investors and large domestic investors. But what are average Indians like you and me doing with all their savings and where are they parking their money? Answer is physical assets like real estate and gold. 90% of the Indians wealth is in physical assets and we love these assets. Even today you talk to 10 individuals who are earning well, you will hear 8 out 10 talking about buying/investing in these physical assets.
+
+Still there are thousands of average Indians like you and me who want to make money in stock market, who want to be long term investors in stock market but majority of them end up being traders and burn their money. 
+
+### Majority of them end up losing money in Stock Market 
+
+If you talk to average investors majority of them would tell you stories about how the stocks they bought went from 200 to 10 or 500 to 5. The biggest problem with retails investors is they dont know what to buy and they never try to learn about the companies before they buy. Usually they learn about the company after they buy.
+
+From my understanding average retail investors buy:
+
+- Stocks which are recommended by Technical Analysis experts 
+
+- Stocks which are recommended by the big equity houses.
+
+- Stocks which are moving up almost on a daily basis.
+
+- Stocks at 52 week low.
+
+- Stocks at 52 week high.
+
+- Stocks which are multi baggers of last 2, 5 or 10 years as they will be all over the news.
+
+Buying based on the above mentioned reasons never help you make money instead fund houses, technical analysts, business channels and business websites make more money. 99% percent of the retail "investors" who want to make money in stock market through investing end up following these steps, do trading instead of investing and burn their money. 
+
+
+### Stock Market or Equity Investment is better than other options
+
+- Sensex is the benchmark index of Indian stock market. Its base date is April 1,1979. On that day, it was set at 100.  On January of 2020 it reached 41000. 41 years of investing giving your returns of 410 times. Annual growth rate is around 16%.
+
+- At today's level after the market crash due to Covid-19, Sensex is at 31000 which is still 310 times returns in 41 years. 
+
+
+```{r}
+
+library(tidyverse)
+library(highcharter)
+library(plotly)
+
+data <- tibble(
+  Option = c("BankFD", "Gold", "Sensex"),
+  FinalReturns = c(268114, 408474, 4528568)
+)
+
+hchart(data, "column", hcaes(x=Option, y=FinalReturns, color = Option)) %>%
+  hc_title(text = "Present value of 10000 Invested in 1979") %>%
+  hc_credits(enabled  = TRUE, text = "Source : Mint Research") %>%
+  hc_size(height = 350)
+
+```
+
+
+- Gold has given 40 times returns. Annual growth rate is around 9.5%.
+
+- Bank Fixed Deposit has given 26 times returns. Annual growth rate is around 8.5%.
+
+- Unlike western developed countries, I dont think we have any data giving us insights into real estate returns of India. Only data we have is people boosting about how their property value has growth 50 times in 50 years. I can give you one example of real estate properties in North Bangalore in last 15 years, which is around 5 times growth. Remember North Bangalore is one of the most highly priced real estate market in Bangalore as its closer to the International Airport. May be for understanding purpose we can extrapolate this to 41 years and calculate the return rate. Annual growth rate is around 11.5%.
+
+
+
+```{r}
+
+
+data <- tibble(
+  Option = c("BankFD", "Gold", "Sensex", "RealEstate"),
+  ReturnRate = c(8.5, 9.5, 16, 11.5)
+)
+
+hchart(data, "column", hcaes(x=Option, y=ReturnRate, color = Option)) %>%
+  hc_title(text = "Approximate Annual Return Rates of Investing Options") %>%
+  hc_size(height = 350)
+
+
+```
+
+
+So it is very clear that stock market gives better returns than any other asset class by huge margin. 
+
+
+### Buy shares of companies you know.
+
+So how does an average person who wants to invest in market decide what to buy? Answer is simple, buy the companies you know. An average Indian would be using products and services of at least 10 companies which are listed in stock market and to make it even better he or she would be using these products or services for last 15-20 years. Some of these products will be used every single day, month after month and year after year. Imagine you have been using these products and services for decades and lot of times you wont try to replace them with any other product even if there are new launches by different companies.
+
+- Monthly salary will be deposited to one of the Top 4-5 banks - HDFC, ICICI, Axis, Kotak, etc
+
+- Owns a Maruti Car or Bajaj/Hero/Royal Enfield bike.
+
+- Uses toothpaste, soaps, detergents, cleaning liquids and other toiletiers everyday - HUL, Colgate, etc
+
+- Uses cooking oil, hair oil, grains, cookies, coffee almost daily basis - Nestle, Marico, Godrej Consumer, Britannia, ITC, etc.
+
+- House construction or renovation - Asian Paints, Berger Paints, Pidilite, Astral Poly, Havells, etc
+
+- Life insurance policy from one of the top private firm - HDFC life, ICICI life, etc.
+
+- Weekly or Monthly shopping and eating out - Dominos, PVR, Inox, etc
+
+- Mutual fund investing - HDFC AMC, Nippon Asset Management, etc.
+
+- House loan or Personal Loan or Consumer Loan - HDFC, Bajaj Finance, etc.
+
+Just write down where you spend you monthly income and which company is making money out of it. Also note down how long you been using products and services of these companies, that would give you answers to what to buy.
+
+Based on this basic understanding let us see what would have been the returns if we had invested in these companies last 20 years. 
+
+```{r}
+
+portfolio <- tibble(
+  Companies = c("HDFCBank", "HDFC", "Maruti", "Bajaj", "Asian Paints", "Pidilite", "ITC", "Britannia", "Marico", "HUL"),
+  Returns = c(5120, 5630, 2877, 745, 8696, 7912, 804, 3444, 7526, 628),
+  InitialInvestment = rep(10000,10)
+)
+
+portfolio$Returnsin20Years <- portfolio$InitialInvestment * (portfolio$Returns/100)
+
+hchart(portfolio, 
+       "column", 
+       hcaes(x=Companies, 
+             y=Returnsin20Years, 
+             color=Companies)) %>%
+  hc_title(text = "Value of 10000 Invested in Companies you know after 20 Years") %>%
+  hc_subtitle(text = "1 Lakh Invested in 10 Companies is Worth 43 Lakhs after 20 Years which is growth of 43 times at the average annual rate of around 20%") %>%
+  hc_credits(enabled = TRUE, text = "Sample Portfolio 1")
+
+```
+
+
+Let us replace 
+
+- HDFCBank with ICICI
+- ITC with Dabur
+- Asian Paints with Berger Paints
+- Pidilite with Havells
+
+
+```{r}
+
+portfolio <- tibble(
+  Companies = c("ICICI", "HDFC", "Maruti", "Bajaj", "Berger Paints", "Havells", "Dabur", "Britannia", "Marico", "HUL"),
+  Returns = c(2432, 5630, 2877, 745, 15690, 30000, 1674, 3444, 7526, 628),
+  InitialInvestment = rep(10000,10)
+)
+
+portfolio$Returnsin20Years <- portfolio$InitialInvestment * (portfolio$Returns/100)
+
+hchart(portfolio, 
+       "column", 
+       hcaes(x=Companies, 
+             y=Returnsin20Years, 
+             color=Companies)) %>%
+  hc_title(text = "Value of 10000 Invested in Companies you know after 20 Years") %>%
+  hc_subtitle(text = "1 Lakh Invested in 10 Companies is Worth 70 Lakhs after 20 Years which is growth of 70 times at the average annual rate of around 23.5%") %>%
+  hc_credits(enabled = TRUE, text = "Sample Portfolio 2")
+
+```
+
+
+In a portfolio of 10 stocks its those 2-3 companies which make huge difference. Even if you have 2-3 stocks which dont do much, other companies will make up for the lost ground. 
+
+These portfolios have companies which provide essential services and products for the general population. India being a huge country and opportunity for growth being really big these companies are simply the money making machines of the country. 
+
+> Indian market is as big as entire European market is terms of population size. Companies selling essential services and products have access to such a huge market.
+
+Products and services of even these essential companies have not reached every corner of the country. There is still huge opportunity for these companies even after being such a great known names for decades.
+
+May be sometimes not every company in your list is great company. Do a quick ground reality check:
+
+- Talk to friends and relatives about which bank account they have. 
+
+- Next time when you visit the super store check the shelf space for the products of companies in your list.
+
+- Next time when you visit the super store keep an eye on the shopping cart of the other customers.
+
+- Next time when you are stuck in traffic check the cars and bikes, gives you an idea on which companies are selling most bikes and cars.
+
+- There are always lot of constructions activities in every part of the city, try to check the paint used by some of these constructions.
+
+Keeping an open eye and looking for companies making products and services used by the mass population gives you good idea about what to buy. Even the annual reports wont give you such ground realities. 
+
+So its always better to start with companies which sell essential products and services that you, your friends and neighbors use on a consistent basis than buying companies which some one recommends.
+
+### Buying right and sitting tight is very important
+
+If you show the above two portfolios to people majority of them would say it is easy to show these returns now after 20 years. Who knew that these companies would grow and give these returns? These are wrong questions. 
+
+Really the right question to ask oneself is were you using products and services of these companies 20 years back and are you still using them today? Will you be still using in coming years? 
+
+Answer is astounding YES for majority of these companies. 
+
+Example:
+
+- Will you still buy Britannia Bisuits? Yes and more than we used to buy 10-20 years back.
+
+- Will you use Asian Paints or Berger Paints products for your house renovation? For sure yes.
+
+- Will you still buy the same toiletries? Probably Yes.
+
+How many people have bought these stocks 20 years back and how many are still holding them. 99% of the people would not be holding them for so long, hence the loss of opportunity. 
+
+People buy real estate properties and pass them from one generation to another without even thinking of selling them. People rearly think of selling their physical properties like gold and real estate even if they sell they would buy back the same assets. No one really sits and calculates the real returns of these assets. 
+
+People cant do the same with stocks because the stock ticker is right in front of you ticking every single day and poking you to keep checking. Very few people have the patience to sit through all the ups and downs of the market movements. Average investors succumb to one or max two bad news and sell book their profits. 
+
+Key to making money in market is buying right and sitting tight - PATIENCE.
+
+
+### What After buying Essentials?
+
+Once you start buying these essential companies you will start getting lot of understand of how the market works and how you react to the bad/good news about the stocks you are holding. 
+
+- Start reading about the companies and sectors which you have invested in. 
+
+- Understand market size of the products and services of the companies.
+
+- Learn about the management quality.
+
+- Do more gound reality checks of the products and services by visiting the stores or talking to retail shop owners selling these products and services, etc.
+
+- Look for new ways of people spending their money example in recent years people have started buying Life insurance, car insurance, health insurance, investing in mutual funds, etc. Do you see any stock ideas out of these spendings? 
+
+- Start reading books about businesses and investing. These will give you more ideas about what you have to look for in making your investing journey more and more profitable. 
+
+These are by no means stock recommendations and idea behind this article is to help average investors with basic ideas about starting their investing journey. Stock market investing is a very amazing experience of learning about the products, services, companies, management, sectors, supply chains, distribution chains, etc. Starting the journey with the best companies of the country is always the best way to learn more. You may not have short term multibaggers in your portfolio but you surely will have a great and delighting journey. And more importantly you will not lose a lot of money like many of the retail investors do.
+
