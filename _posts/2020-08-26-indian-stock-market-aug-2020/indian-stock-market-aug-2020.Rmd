@@ -4,7 +4,7 @@ description: |
   Stock market has recovered big time since the fall of March 2020. Recovery has been very shift and strong.
 author:
   - name: Umesh Narayanappa
-date: 05-08-2020
+date: 08-30-2020
 output: distill::distill_article
 editor_options: 
   chunk_output_type: console
