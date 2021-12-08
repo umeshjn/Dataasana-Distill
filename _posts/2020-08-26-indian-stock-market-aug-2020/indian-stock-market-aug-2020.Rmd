@@ -3,8 +3,8 @@ title: "Indian Stock Market - Aug 2020"
 description: |
   Stock market has recovered big time since the fall of March 2020. Recovery has been very shift and strong.
 author:
-  - name: Dataasana
-date: "`r Sys.Date()`"
+  - name: Umesh Narayanappa
+date: 05-08-2020
 output: distill::distill_article
 editor_options: 
   chunk_output_type: console

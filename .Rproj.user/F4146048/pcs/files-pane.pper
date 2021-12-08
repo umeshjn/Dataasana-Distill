@@ -1,9 +1,9 @@
 {
-    "path" : "C:/UmeshJN/Personal/Website/2020/Distill/Distill",
-    "sortOrder" : [
+    "path": "C:/UmeshJN/Personal/Website/2020/Distill/Master/Dataasana-Distill",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "columnIndex": 2,
+            "ascending": true
         }
     ]
 }
