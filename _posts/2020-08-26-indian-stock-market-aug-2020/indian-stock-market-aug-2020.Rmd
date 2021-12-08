@@ -1,0 +1,74 @@
+---
+title: "Indian Stock Market - Aug 2020"
+description: |
+  Stock market has recovered big time since the fall of March 2020. Recovery has been very shift and strong.
+author:
+  - name: Dataasana
+date: "`r Sys.Date()`"
+output: distill::distill_article
+editor_options: 
+  chunk_output_type: console
+---
+
+Indian stock market has been on a strong upward trajectory since the March lows. Just like the fall was very shift and brutal, rise has also been very strong and shift. There was so much negativity around the world during March and April time when the horrific news of people dying in New York, Italy and Spain was all over the media which in turn led to the collapse of the stock markets across the world. No one really knows how increase in cases and deaths did not increase that negativity in the market but led to the biggest and strongest rally in the stock market history. 
+
+Even the people who had seen Global financial crisis of 2008 were shocked seeing the kind of fall in the global markets in March 2020. Some people even started  telling this is never seen before situation and its close to the Great Depression of 1920s. But 5 months later we have almost recovered all the losses on the index level from March lows and some companies in sectors like pharma and chemicals have gone on to become the multibaggers even in this Covid times. All those people who stayed away from market hoping to enter when things are more clear on the vaccine or economic recovery are still waiting in the sides to enter. One of the biggest lessons from this rally is there is no way anyone can time the market. No one knows the bottom of the market and top of the market. 
+
+> It is important to stay invested during bad times because the bottom number belongs to the person who stayed invested. - Motilal Oswal's Raamdeo Agrawal
+
+> We simply attempt to be fearful when others are greedy and to be greedy only when others are fearful. - Warren Buffet
+
+
+The biggest plus of the March market lows and Covid situations is that there is huge spike in the number of the retail investors who are buying the stocks in the market. This is a big plus if these investors go on to stay invested by buying quality firms and being the part owners of some of the best businesses of the country. There is a negative side of it as well as the sudden spike in the stock prices has been attributed to the illogical buying by the retail investors as projected by the media and expert opinions. I really hope this time its not illogical but really the retail guys have done their home work and bought into stock which they plan to hold for medium to long term. 
+
+
+There are not lot of avenues for vast majority of the population in India to make our money grow. Real estate and gold which have been predominantly the biggest holdings of the Indian households don't really give inflation beating returns. Due to lack of knowledge and information people still don't get away from these highly expensive, corruption filled, exorbitantly priced physical assets with no real returns.  According to me only way people like us who are not rich can grow our wealth and gain financial independence is by investing in stock market. 
+
+Nearly last 3 years have been abysmal for vast majority of the Indian stock market with no real returns barring few sectors and stocks. The Covid led blow made things even worse for almost all the companies. But as they say buy when there is fear in the market, this ia great opportunity for people like us to really build long term wealth. The winning companies emerging from this will only be better and stronger.
+
+
+> India is at the cusp of economic transformation and probably is going to the fastest growing economy in the world for the next decade.
+
+India is at the cusp of transformation and probably is going to the fastest growing economy in the world for next decade. If that really happens, it should happen through lot of manufacturing companies starting in the country which will manufacture and export to the world markets. This also will increase the GDP per capita which in turn increases the spending power of the population. As the GDP per capita increases, people will start spending more and more. Capitalist economy will flourish and consumerism will boom. Best of the best companies in the country will go on to become bigger and bigger companies. 
+
+According to me, sectors mentioned below will be great sectors for anyone new to investing to begin with as these are sectors which are very widely known and products of which are consumed by majority of the population. Investing in the top companies of these sectors should be great starting point to begin the investing journey.
+
+> Never invest in a business you cannot understand  - Warren Buffet
+
+#### Banking 
+
+- Even after 70+ years after Independence our Govt led banks are having 60+% of the banking share in the country. 
+
+- Next one decade will see more public sectors banks shutting down which in turn will increase the market share for the well run private sector banks.
+
+- The biggest and best run private sector banks will become much more bigger and create huge wealth for the investors.
+
+- Near term outlook for the banks is not all that great due to the fear of NPA due to Covid situation but banks which emerge stronger from this will be great investments.
+
+#### FMCG
+
+- Given the size of the population which is equivalent to the population size of entire Europe, Fast moving consumer goods companies have access to the biggest market.
+
+- As the economic growth and the income levels of the population continues to get better, these companies will be money making machines. 
+
+- Implementation of GST has made life difficult for the smaller players.
+
+- Safe and sound bets to play for long term.
+
+
+#### Autos
+
+- Last 2-3 years has been really difficult time for Auto sector due to the issue with cost of vehicles going up for various Govt measures and transition to BSVI
+
+- Covid has only increased the demand for more private vehicles. 
+
+- As economy reviving starts, consumer discretionary spending will only increase the demand for all kinds of vehicles across the country.
+
+
+These sectors should give anyone at least 10 companies just by picking the top 2-3 companies from the sectors. Buying right and sitting tight should be the goal for any investor. Time in the market is more important than timing the market. Patience is the key for anyone to make money in stock market.
+
+Investing in stock market and the benefits of it should be more popularized across the country not for the sake of making quick money but really for the kind of money which can be made by investing for very very long time. Imagine the wealth that can be generated for the common man by investing in blue chip companies of the country than buying overpriced real estate property.
+
+Just want to end this short note with a story of IRS auditor who lived in 1900s and amassed wealth by investing in stock market even with her normal salary.
+
+> Anne Scheiber, who was an IRS auditor, built a fortune of $22 million and left her wealth to Yeshiva University upon her death. She only invested into stocks she understood and these stocks tended to be “blue-chip” companies. She also elected to reinvest all of the dividends allowing her investments to compound over 50 years.
