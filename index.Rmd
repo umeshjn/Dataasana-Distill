@@ -1,5 +1,5 @@
 ---
-title: "Data, Code and Stories"
+title: "Data, Code, Visualizations and Stories"
 site: distill::distill_website
 listing: posts
 ---
