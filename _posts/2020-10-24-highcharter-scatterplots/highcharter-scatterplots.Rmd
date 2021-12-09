@@ -1,0 +1,244 @@
+---
+title: "Highcharter - ScatterPlots"
+description: |
+  Scatter plots are used for plotting two quantative variables and can include mutliple variables in the view using the size and color of the points.
+author:
+  - name: Umesh Narayanappa
+date: 10-24-2020
+output: distill::distill_article
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## What is highcharter?
+
+Highcharter is a R wrapper for Highcharts javascript library and its modules. Highcharts is very flexible and customizable javascript charting library and it has a great and powerful API.
+
+
+### Scatter plot
+
+A scatter plot uses dots to represent values for two different numeric variables or quantitative variables. This plot basically helps us to identify the relationship pattern between two variables in a given dataset.
+
+### Data View
+
+We are going to use this dataset for plotting different variations of the scatterplots
+
+```{r}
+
+library(tidyverse)
+library(highcharter)
+library(DT)
+
+DT::datatable(mpg)
+
+```
+
+
+### Default Scatter Plot
+
+```{r}
+
+hchart(
+  mpg,
+  "scatter",
+  hcaes(x=displ, y= hwy)
+)
+
+```
+
+
+### How to change the color of the points
+
+```{r}
+
+hchart(
+  mpg,
+  "scatter",
+  hcaes(x=displ, y= hwy),
+  color = "blue"
+)
+
+```
+
+
+### How to change the color of the points using HEX color
+
+
+```{r}
+
+hchart(
+  mpg,
+  "scatter",
+  hcaes(x=displ, y= hwy),
+  color = "#870ca6"
+)
+
+```
+
+
+### How to change the color based on the value in the data
+
+
+```{r}
+
+hchart(
+  mpg,
+  "scatter",
+  hcaes(x=displ, y= hwy, group = manufacturer)
+)
+
+```
+
+
+### How to change the color based on categorical value
+
+
+```{r}
+
+hchart(
+  mpg,
+  "scatter",
+  hcaes(x=displ, y= hwy, group = class)
+)
+
+```
+
+
+### How to change the color based on values in Y axis using color palette
+
+```{r}
+
+hchart(
+  mpg,
+  "scatter",
+  hcaes(x=hwy, y= displ)
+) %>% 
+  hc_colorAxis(
+    stops = color_stops(colors = viridisLite::inferno(5))
+    )
+
+```
+
+
+#### Viridis - Color palatte package
+
+> [viridis](https://github.com/sjmgarnier/viridis), and its companion package viridisLite provide a series of color maps that are designed to improve graph readability for readers with common forms of color blindness and/or color vision deficiency. The color maps are also perceptually-uniform, both in regular form and also when converted to black-and-white for printing
+
+
+
+
+### Different color palatte
+
+
+```{r}
+
+hchart(
+  mpg,
+  "scatter",
+  hcaes(x=hwy, y= displ)
+) %>% 
+  hc_colorAxis(
+    stops = color_stops(colors = viridisLite::viridis(10))
+    )
+
+```
+
+
+### Adding Title and subtitle to the plot
+
+```{r}
+
+hchart(
+  mpg,
+  "scatter",
+  hcaes(x=displ, y= hwy),
+  color = "#870ca6"
+) %>%
+  hc_title(text = "Scatter plot of Displacement and Highway Mileage") %>%
+  hc_subtitle(text = "As the Displacement increases, highway mileage decreases")
+
+```
+
+
+
+### How to change the alignment of the legend - default
+
+```{r}
+
+data(penguins, package = "palmerpenguins")
+
+hchart(
+  penguins, 
+  "scatter", 
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
+  color = c("#355070","#fca311", "#b56576")
+) 
+
+```
+
+
+### How to change the alignment of the legend - Bottom Right Horizontal
+
+```{r}
+
+data(penguins, package = "palmerpenguins")
+
+hchart(
+  penguins, 
+  "scatter", 
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
+  color = c("#355070","#fca311", "#b56576")
+)  %>%
+  hc_legend(
+    layout = "horizontal", 
+    align = "right",
+    verticalAlign = "bottom")
+
+```
+
+
+### How to change the alignment of the legend - Top Right Horizontal
+
+```{r}
+
+data(penguins, package = "palmerpenguins")
+
+hchart(
+  penguins, 
+  "scatter", 
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
+  color = c("#219ebc","#023047", "#ffb703")
+) %>%
+  hc_legend(
+    layout = "horizontal", 
+    align = "right",
+    verticalAlign = "top")
+
+```
+
+
+### How to change the alignment of the legend - Top Left Horizontal
+
+```{r}
+
+data(penguins, package = "palmerpenguins")
+
+hchart(
+  penguins, 
+  "scatter", 
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
+  color = c("#219ebc","#023047", "#ffb703")
+)  %>%
+  hc_legend(
+    layout = "horizontal", 
+    align = "left",
+    verticalAlign = "top")
+
+```
+
+
+## Credits
+
+* Thanks to Joshua Kunst for creating such a wonderful package for visualization
+* Thanks to the whole team at RStudio and the whole R community 
