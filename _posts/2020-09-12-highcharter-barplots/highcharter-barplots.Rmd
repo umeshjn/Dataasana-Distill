@@ -1,0 +1,170 @@
+---
+title: "Highcharter - Barplots"
+description: |
+  Highcharter is one of the best interactive visualization package available in R. Barplots are the most commonly used plots in the data visualization world. 
+author:
+  - name: Umesh Narayanappa
+date: 09-12-2020
+output: distill::distill_article
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## What is highcharter?
+
+Highcharter is a R wrapper for Highcharts javascript library and its modules. Highcharts is very flexible and customizable javascript charting library and it has a great and powerful API.
+
+
+### Data View
+
+We are going to use this dataset for plotting different variations of the barplots
+
+```{r}
+
+library(tidyverse)
+library(highcharter)
+library(DT)
+
+DT::datatable(mpg)
+
+```
+
+
+### Default Bar Plot is a Horizontal plot
+
+```{r, layout="l-body-outset"}
+
+makers <- count(mpg, manufacturer)
+
+hchart(
+  makers,
+  "bar",
+  hcaes(x=manufacturer, y= n)
+)
+
+```
+
+
+### How to make it a vertical bar plot
+
+```{r, layout="l-body-outset"}
+
+hchart(
+  makers,
+  "column",
+  hcaes(x=manufacturer, y= n)
+)
+
+```
+
+### How to change the default color of the bars
+
+```{r, layout="l-body-outset"}
+
+hchart(
+  makers,
+  "column",
+  hcaes(x=manufacturer, y= n),
+  color = "maroon"
+)
+
+```
+
+### How to sort the bars in the plot in a order
+
+```{r, layout="l-body-outset"}
+
+mpg %>%
+  group_by(manufacturer) %>%
+  count() %>%
+  arrange(desc(n)) -> makers 
+
+hchart(
+  makers,
+  "column",
+  hcaes(x=manufacturer, y= n),
+  color = "maroon"
+)
+
+```
+
+
+### How to Create Side by Side Bar plot
+
+```{r, layout="l-body-outset"}
+
+mpgman2 <- count(mpg, manufacturer, year)
+
+hchart(
+  mpgman2, 
+  "bar",
+  hcaes(x = manufacturer, y = n, group = year),
+  color = c("maroon", "darkgrey"),
+  name = c("Year 1999", "Year 2008")
+  )
+
+```
+
+
+### How to Create Side by Side Column plot
+
+```{r, layout="l-body-outset"}
+
+mpgman2 <- count(mpg, manufacturer, year)
+
+hchart(
+  mpgman2, 
+  "column",
+  hcaes(x = manufacturer, y = n, group = year),
+  color = c("maroon", "darkgrey"),
+  name = c("Year 1999", "Year 2008")
+  )
+
+```
+
+
+### How to Sort the Bars based on Categorical Attribute
+
+
+```{r, layout="l-body-outset"}
+
+mpg %>%
+  group_by(manufacturer, year) %>%
+  count() %>%
+  arrange(desc(manufacturer)) -> makers 
+
+hchart(
+  makers, 
+  "column",
+  hcaes(x = manufacturer, y = n, group = year),
+  color = c("maroon", "darkgrey"),
+  name = c("Year 1999", "Year 2008")
+  )
+
+```
+
+
+### How to Create Stacked Bars plot
+
+
+```{r, layout="l-body-outset"}
+
+mpgman2 <- count(mpg, manufacturer, year)
+
+hchart(
+  mpgman2, 
+  "column",
+  hcaes(x = manufacturer, y = n, group = year),
+  color = c("maroon", "darkgrey"),
+  name = c("Year 1999", "Year 2008"),
+  stacking = "normal"
+  )
+
+```
+
+
+## Credits
+
+* Thanks to Joshua Kunst for creating such a wonderful package for visualization
+* Thanks to the whole team at RStudio and the whole R community 
