@@ -1,0 +1,232 @@
+---
+title: "Highcharter - Line Plots"
+description: |
+  Line plots a very common type of plots specially in finance domain. These plots are useful for viewing the variation in a numerical attribute over a time period.
+author:
+  - name: Umesh Narayanappa
+date: 11-12-2020
+output: distill::distill_article
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## What is highcharter?
+
+Highcharter is a R wrapper for Highcharts javascript library and its modules. Highcharts is very flexible and customizable javascript charting library and it has a great and powerful API.
+
+
+### Line plot
+
+Line plots a very common type of plots specially in finance domain. These plots are useful for viewing the variation in a numerical attribute over a time period.
+
+### Data View
+
+We are going to use this dataset for plotting different variations of the scatterplots
+
+```{r}
+
+library(tidyverse)
+library(highcharter)
+library(DT)
+
+data(economics_long, package = "ggplot2")
+
+economics_long2 <- dplyr::filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
+
+DT::datatable(economics_long2)
+
+```
+
+
+### Default Line Plot
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("unemploy")),
+  "line",
+  hcaes(x=date,
+        y=value01)
+)
+
+```
+
+### Changing the color of the line
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("unemploy")),
+  "line",
+  hcaes(x=date,
+        y=value01),
+  color = "#fca311"
+)
+
+```
+
+
+### Plotting two numerical variables over time
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("pop","unemploy")),
+  "line",
+  hcaes(x=date,
+        y=value01,
+        group = variable),
+  color = c("#00296b","#fca311")
+)
+
+```
+
+
+
+### Plotting three numerical variables over time
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("pop","unemploy", "uempmed")),
+  "line",
+  hcaes(x=date,
+        y=value01,
+        group = variable),
+  color = c("#00296b","#fca311","#177e89")
+)
+
+```
+
+
+
+### Legend - Horizontal Bottom Right 
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("pop","unemploy", "uempmed")),
+  "line",
+  hcaes(x=date,
+        y=value01,
+        group = variable),
+  color = c("#00296b","#fca311","#177e89")
+) %>%
+  hc_legend(
+    layout = "horizontal",
+    align = "right",
+    verticalAlign = "bottom"
+    
+  )
+
+```
+
+
+### Legend - Horizontal Bottom Right 
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("pop","unemploy", "uempmed")),
+  "line",
+  hcaes(x=date,
+        y=value01,
+        group = variable),
+  color = c("#00296b","#fca311","#177e89")
+) %>%
+  hc_legend(
+    layout = "horizontal",
+    align = "left",
+    verticalAlign = "bottom"
+    
+  )
+
+```
+
+
+### Legend - Horizontal Top Right 
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("pop","unemploy", "uempmed")),
+  "line",
+  hcaes(x=date,
+        y=value01,
+        group = variable),
+  color = c("#00296b","#00509d","#fdc500")
+) %>%
+  hc_legend(
+    layout = "horizontal",
+    align = "right",
+    verticalAlign = "top"
+    
+  )
+
+```
+
+### Legend - Horizontal Top Left 
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("pop","unemploy", "uempmed")),
+  "line",
+  hcaes(x=date,
+        y=value01,
+        group = variable),
+  color = c("#00296b","#00509d","#fdc500")
+) %>%
+  hc_legend(
+    layout = "horizontal",
+    align = "left",
+    verticalAlign = "top"
+    
+  )
+
+```
+
+
+### Legend - Vertical Top Right 
+
+```{r}
+
+hchart(
+  dplyr::filter(economics_long, variable %in% c("pop","unemploy", "uempmed")),
+  "line",
+  hcaes(x=date,
+        y=value01,
+        group = variable),
+  color = c("#00296b","#00509d","#fdc500")
+) %>%
+  hc_legend(
+    layout = "vertical",
+    align = "right",
+    verticalAlign = "top"
+    
+  )
+
+```
+
+
+### Plotting more numerical variables over time
+
+```{r}
+
+hchart(
+  economics_long,
+  "line",
+  hcaes(x=date,
+        y=value01,
+        group = variable),
+  color = c("#00296b","#fca311","#177e89", "#8f2d56", "#6d597a")
+)
+
+```
+
+
+## Credits
+
+* Thanks to Joshua Kunst for creating such a wonderful package for visualization
+* Thanks to the whole team at RStudio and the whole R community 
