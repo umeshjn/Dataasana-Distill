@@ -1,0 +1,253 @@
+---
+title: "Cancer in New York State, 1976-2018"
+description: |
+  Humanity has been fighting the war with cancer for long time and the numbers of New York State shows that there is great progress. All thanks to the advancements in the field of science and technology which has made this possible.
+author:
+  - name: Umesh Narayanappa
+date: 01-24-2021
+output: distill::distill_article
+editor_options: 
+  chunk_output_type: console
+---
+
+Cancer is not just one disease but group of diseases. There are more than 100 types of cancers and they are named from the part of the body where they start. Here I try to understand the data which I have downloaded from New York State Health Department website. 
+
+Cancer is a very dreaded disease specially in the developing and under developed countries, and the assumption is treatments/cure for cancer is better in the developed countries like US and European countries. This is an attempt to understand if there is any improvements in the fight against cancer in USA using New York State data.
+
+
+<br>
+
+
+> Cancer begins in your cells, which are the building blocks of your body. Normally, your body forms new cells as you need them, replacing old cells that die. Sometimes this process goes wrong. New cells grow even when you don't need them, and old cells don't die when they should. These extra cells can form a mass called a tumor. Tumors can be benign or malignant. Benign tumors aren't cancer while malignant ones are. Cells from malignant tumors can invade nearby tissues. They can also break away and spread to other parts of the body. 
+
+
+
+```{r, echo = FALSE}
+
+knitr::opts_chunk$set(echo = FALSE)
+
+library(highcharter)
+library(viridis)
+library(tidyverse)
+library(DT)
+
+## Importing the data
+cancer <- readxl::read_xlsx("../../data/NewYorkState_CancerIncidenceandDeaths1976-2018.xlsx")
+
+```
+
+There were nearly 3.9 million cancer cases registered in New York State between 1976 to 2018. In 1976 the number of cases were 66326 and in 2018 that number has gone up to 111947. The cases have gone up by 70% between this time period.
+
+```{r}
+
+cancer %>%
+  select(Year, `Total Cases`, `Male Cases`, `Female Cases`) %>%
+  gather(key = "Category", value = "Cases", 2:4) -> cases
+
+hchart(cases %>% filter(Category == "Total Cases"), 
+       "heatmap",
+       hcaes(x = Year, y = Category, value = Cases)) %>%
+  hc_yAxis(
+    title = list(text = ""),
+    reversed = TRUE, 
+    offset = 20,
+    tickLength = 0,
+    gridLineWidth = 0, 
+    minorGridLineWidth = 0,
+    labels = list(text = "")
+  ) %>%
+  hc_xAxis(
+    labels = list(style = list(fontSize = "10px"))
+  ) %>%
+  hc_size(width = 1000, height = 160) %>%
+  hc_colorAxis(
+    stops = color_stops(10, viridisLite::inferno(10, direction = -1))
+  )
+
+```
+
+
+There were 1.93 million cases by Males and 1.96 million cases by Females registered. The cases have gone up by 73% among males and 64% among females during this time period.
+
+
+```{r}
+
+
+hchart(cases %>% filter(Category != "Total Cases"), 
+       "heatmap",
+       hcaes(x = Year, y = Category, value = Cases)) %>%
+  hc_yAxis(
+    title = list(text = ""),
+    reversed = TRUE, 
+    offset = 20,
+    tickLength = 0,
+    gridLineWidth = 0, 
+    minorGridLineWidth = 0,
+    labels = list(style = list(fontSize = "9px"))
+  ) %>%
+  hc_xAxis(
+    labels = list(style = list(fontSize = "10px"))
+  ) %>%
+  hc_size(width = 1000, height = 180) %>%
+  hc_colorAxis(
+    stops = color_stops(10, viridisLite::inferno(10, direction = -1))
+  )
+
+```
+
+
+Looking at the increase in the number of cases its frightening how many people and their families have been going through painful journey of fighting the cancer. 
+
+> 3.8 Million Cases registered in the state of New York alone between 1976 and 2018. 70% increase in the number of cases during this time period. 
+
+
+1.5 million people have died due to cancer, number of deaths were 36530 in 1976 and 33714 in 2018. While the number of cases have increased by 70% during this time period, the number of deaths yearly looks to have come down. 
+
+```{r}
+
+cancer %>%
+  select(Year, `Total Deaths`, `Male Deaths`, `Female Deaths`) %>%
+  gather(key = "Category", value = "Deaths", 2:4) -> deaths
+
+hchart(deaths %>% filter(Category == "Total Deaths"), 
+       "heatmap",
+       hcaes(x = Year, y = Category, value = Deaths)) %>%
+  hc_yAxis(
+    title = list(text = ""),
+    reversed = TRUE, 
+    offset = 20,
+    tickLength = 0,
+    gridLineWidth = 0, 
+    minorGridLineWidth = 0,
+    labels = list(style = list(fontSize = "9px"))
+  ) %>%
+  hc_xAxis(
+    labels = list(style = list(fontSize = "10px"))
+  ) %>%
+  hc_size(width = 1000, height = 180) %>%
+  hc_colorAxis(
+    stops = color_stops(10, viridisLite::inferno(10, direction = -1))
+  ) %>%
+  hc_legend(
+    layout = "horizontal",
+    verticalAlign = "top",
+    align = "right"
+  )
+
+```
+
+
+
+790K men and 784K women have lost the battle to cancer between 1976 and 2018. Yearly number of deaths have gone down for both men and women inspite of the number of cases increasing substanially.
+
+
+```{r}
+
+
+cancer %>%
+  select(Year, `Total Deaths`, `Male Deaths`, `Female Deaths`) %>%
+  gather(key = "Category", value = "Deaths", 2:4) -> deaths
+
+hchart(deaths %>% filter(Category != "Total Deaths"), 
+       "heatmap",
+       hcaes(x = Year, y = Category, value = Deaths)) %>%
+  hc_yAxis(
+    title = list(text = ""),
+    reversed = TRUE, 
+    offset = 20,
+    tickLength = 0,
+    gridLineWidth = 0, 
+    minorGridLineWidth = 0,
+    labels = list(style = list(fontSize = "9px"))
+  ) %>%
+  hc_xAxis(
+    labels = list(style = list(fontSize = "10px"))
+  ) %>%
+  hc_size(width = 1000, height = 180) %>%
+  hc_colorAxis(
+    stops = color_stops(10, viridisLite::inferno(10, direction = -1))
+  ) %>%
+  hc_legend(
+    layout = "horizontal",
+    verticalAlign = "top",
+    align = "right"
+  )
+
+```
+
+
+So far we have looked at the number of cases as well as number of deaths but none of these two tell us anything about if there is any wins in the war against cancer. There is one more attribute or metric which helps us get a different view and that is Rate per 100000 population. 
+
+Number of deaths per 100000 population has gone from 222 to 134 between 1976 and 2018, that is  40% reduction in deaths per 100000 population. This is really amazing feat given the opponent we are fighting against.
+
+
+```{r}
+cancer %>%
+  rename('Death Rates' = `Total Death Rate per 100,000 Population`, 'Male Death Rates' = `Male Death Rate per 100,000 Males`, 'Female Death Rates'= `Female Death Rate per 100,000 Females`) %>%
+  select(Year, `Death Rates`, `Male Death Rates`, `Female Death Rates`) %>%
+  gather(key = "Category", value = "DeathRates", 2:4) -> deathrates
+
+hchart(deathrates %>% filter(Category == "Death Rates"), 
+       "heatmap",
+       hcaes(x = Year, y = Category, value = DeathRates)) %>%
+  hc_yAxis(
+    title = list(text = ""),
+    reversed = TRUE, 
+    offset = 20,
+    tickLength = 0,
+    gridLineWidth = 0, 
+    minorGridLineWidth = 0,
+    labels = list(style = list(fontSize = "9px"))
+  ) %>%
+  hc_xAxis(
+    labels = list(style = list(fontSize = "10px"))
+  ) %>%
+  hc_size(width = 1000, height = 160) %>%
+  hc_colorAxis(
+    stops = color_stops(10, viridisLite::viridis(10, direction = -1))
+  ) %>%
+  hc_legend(
+    layout = "horizontal",
+    verticalAlign = "top",
+    align = "right"
+  )
+
+```
+
+
+
+* Among men rates have gone from 284 to 156 which is 45% reduction 
+* Among women rates have gone from 184 to 120 which is 35% reduction
+
+
+```{r}
+
+hchart(deathrates %>% filter(Category != "Death Rates"), 
+       "heatmap",
+       hcaes(x = Year, y = Category, value = DeathRates)) %>%
+  hc_yAxis(
+    title = list(text = ""),
+    reversed = TRUE, 
+    offset = 20,
+    tickLength = 0,
+    gridLineWidth = 0, 
+    minorGridLineWidth = 0,
+    labels = list(style = list(fontSize = "9px"))
+  ) %>%
+  hc_xAxis(
+    labels = list(style = list(fontSize = "10px"))
+  ) %>%
+  hc_size(width = 1000, height = 180) %>%
+  hc_colorAxis(
+    stops = color_stops(10, viridisLite::viridis(10, direction = -1))
+  ) %>%
+  hc_legend(
+    layout = "horizontal",
+    verticalAlign = "top",
+    align = "right"
+  )
+
+```
+
+
+Given the quantum of reduction in the death rate per 100000 population, humanity has really been slowly and steadily winning the fight against cancer. I would like to thank everyone who were all responsible for this great advancements in the fight against the deadliest disease of 21st century. 
