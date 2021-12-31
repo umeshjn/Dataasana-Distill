@@ -1,0 +1,189 @@
+---
+title: "Crimes in Seattle (2011-2017)"
+description: |
+  Crimes in any cities is the biggest concerns for law enforcement agencies. 
+author:
+  - name: Umesh Narayanappa
+date: 01-12-2021
+output: distill::distill_article
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r echo=FALSE}
+
+library(tidyverse)   ## data science package collection (incl. the ggplot2 package)
+library(systemfonts) ## use custom fonts (need to be installed on your OS)  
+library(scico)       ## scico color palettes(http://www.fabiocrameri.ch/colourmaps.php) in R 
+library(ggtext)      ## add improved text rendering to ggplot2
+library(ggforce)     ## add missing functionality to ggplot2
+library(ggdist)      ## add uncertainity visualizations to ggplot2
+library(magick)      ## load images into R
+library(patchwork)   ## combine outputs from ggplot2
+library(highcharter)
+
+library(reactable)
+library(htmltools)
+library(reactablefmtr)
+library(lubridate)
+
+library(leaflet)
+
+crimes <- read_csv("../../data/Seattle_Crimes_2008_2017.csv")
+
+```
+
+Cities around the world are biggest crime spots for various reasons. The task for the law enforcement agencies is a tall one with ever growing population and more influx of new people from outside into the cities. As pointed by most experts one of the biggest reasons for the huge crime rate in cities in socioeconomic which is grossly neglected in today's world across every cities and countries.
+
+```{r echo=FALSE, layout="l-body-outset", fig.width=6, fig.height=5}
+
+
+crimes %>%
+  mutate(Date =  as.Date(`Report DateTime`, format = "%m/%d/%Y")) %>%
+  mutate(Year = year(Date),
+         Month = month(Date, label = TRUE),
+         WeekDay = wday(Date, label = TRUE)) %>%
+  filter(Year >= 2008 & Year <= 2017) -> story
+
+ story %>%
+  count(Year, Month) %>%
+  mutate(Year = as.character(Year)) %>%
+  pivot_wider(names_from = Month, values_from = n) -> data
+
+reactable(
+  data,
+  theme = nytimes(),
+  compact = TRUE,
+  pagination = FALSE,
+  showSortIcon = FALSE,
+  defaultSorted = "Year",
+  defaultColDef = colDef(
+    maxWidth = 60,
+    cell = color_tiles(data, span = TRUE, colors = c("#ffbaba", "#ff5252", "#a70000"))
+  ),
+  columns = list(
+    country = colDef(
+      maxWidth = 160
+    )
+  )
+) %>%
+  add_title("Seattle Reported Crimes 2011-2017", font_size = 21) 
+
+```
+
+
+
+> Almost 70% of the crimes reported are committed against the properties.
+
+
+Crimes in Seattle have increased over the years and there have been 655K crimes reported between 2008 and 2017. Crimes can be committed against a person, society or a property, crimes in Seattle are committed mostly against the properties in huge numbers. 
+
+
+```{r echo=FALSE, out.width= "55%", out.extra='style="float:right; padding:10px"'}
+
+
+story %>%
+  filter(`Crime Against Category` != "NOT_A_CRIME") %>%
+  count(`Crime Against Category`) -> against
+
+hchart(against, "pie", hcaes(name = `Crime Against Category`, y = n), innerSize = 200) %>%
+    hc_colors(colors = c("#ffbaba","#ff7b7b", "#a70000")) %>%
+    hc_title(text = "Crimes committed against") %>%
+    hc_caption(text = "Source: Seattle Police Department")
+
+```
+
+
+> People committing crimes are busy on the weekends and weekdays are the work days for the criminals as well.
+
+Number of crimes reported are highest during the weekdays, is it because the majority of the crimes are against the properties and owners are usually around the properties during weekends and busy at work during weekends.
+
+
+```{r echo=FALSE, layout="l-body-outset", fig.height=5}
+
+story %>%
+  group_by(Month, WeekDay) %>%
+  count() %>%
+  hchart("heatmap", hcaes(x = Month, y = WeekDay, value = n)) %>%
+    hc_colorAxis(stops = color_stops(10, viridisLite::rocket(10, direction = -1))) %>%
+    hc_caption(text = "Source: Seattle Police Department")
+
+```
+
+> Top 10 Offense types account for around 93% and Top 5 contribute more than 70% of the reported crimes with Larceny theft contributing 38% of the numbers.
+
+What is Larceny ?
+
+Larceny is a crime involving the unlawful taking or theft of the personal property of another person or business. It was an offence under the common law of England and became an offence in jurisdictions which incorporated the common law of England into their own law, where in many cases it remains in force.
+
+
+```{r echo=FALSE, layout="l-body-outset", fig.width=6, fig.height=5}
+
+story %>%
+  count(`Offense Parent Group`) %>%
+  arrange(desc(n)) %>%
+  ungroup() %>%
+  mutate(Rank = c(1:30)) %>%
+  mutate(Offense = if_else(Rank <= 10, `Offense Parent Group`, "Other")) %>% 
+  group_by(Offense) %>%
+  summarise(Total = sum(n)) %>%
+  mutate(percent = Total/sum(Total) * 100) %>%
+  hchart("pie", hcaes(name = Offense, y = Total), innerSize = 250) %>%
+  hc_caption(text = "Source: Seattle Police Department")
+
+
+```
+
+
+It would be interesting to see if there is any variation in the proportion of these offenses across the months.
+
+```{r echo=FALSE, layout="l-body-outset", fig.width=6, fig.height=5}
+
+story %>%
+  count(`Offense Parent Group`) %>%
+  arrange(desc(n)) %>%
+  ungroup() %>%
+  mutate(Rank = c(1:30)) %>%
+  mutate(Offense = if_else(Rank <= 10, `Offense Parent Group`, "Other")) %>% 
+  group_by(Offense) %>%
+  summarise(Total = sum(n)) -> top10
+
+story %>%
+  filter(`Offense Parent Group` %in% top10$Offense) %>%
+  filter(Year == 2017) %>%
+  count(Date, `Offense Parent Group`) %>%
+  hchart("streamgraph", hcaes(Date, n, group = `Offense Parent Group`)) %>% 
+  hc_yAxis(visible = FALSE, startOnTick = FALSE, endOnTick = FALSE) %>% 
+  hc_xAxis(gridLineWidth = 0) %>% 
+  hc_tooltip(table = TRUE, outside = TRUE) %>%
+    hc_title(text = "Proportion of Top 10 Offenses in 2017") %>%
+  hc_caption(text = "Source: Seattle Police Department")
+
+```
+
+
+Map below lets us to explore the crimes on the map of the city of Seattle and zero in on the location of the crimes.
+
+
+```{r echo=FALSE, layout="l-body-outset", fig.width=6, fig.height=5}
+
+crimes %>%
+  mutate(lng = Longitude, lat = Latitude) %>%
+  count(lat, lng) -> ttt
+
+leaflet(ttt) %>%
+  setView(lng = -122.4, lat = 47.65, zoom = 10) %>%
+  addTiles() %>%
+  addMarkers(
+    clusterOptions = markerClusterOptions()
+  )
+
+```
+
+
+I believe City administrations get enough funds for maintaining the infrastructure in the city and also maintaining the law and order. If they have short of funds they do have enough avenues to get more funding. Looking the offenses it shows that Seattle has wide economic divide just like every other city in the world. I am not saying poor commit more crimes, but it is the duty of the administrations to make sure every one has equal and fair opportunity to build their lives in the cities.
+
+It is also the duty of the administrations and the society as a whole to make sure we as a community live and thrive. It is the responsibility of each and every person in the city to make sure that we help each other to stand on our own feet to live a good sustainable life. 
+
+Create more and more jobs, train more and more people in the skills which are in demand, promote people who create more jobs and create more community mentors who can mentor the people to go in the right path. 
